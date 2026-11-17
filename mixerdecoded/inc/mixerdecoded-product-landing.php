@@ -39,7 +39,7 @@ function mdpl_admin_assets( $hook ) {
 		'mdpl-admin',
 		get_template_directory_uri() . '/assets/js/mdpl-admin.js',
 		array( 'jquery', 'media-editor', 'media-views' ),
-		'1.2.0',
+		'1.3.0',
 		true
 	);
 }
@@ -63,14 +63,14 @@ function mdpl_front_assets() {
 		'mdpl-product-landing',
 		get_template_directory_uri() . '/assets/css/product-landing.css',
 		array( 'dashwall-style' ),
-		'1.2.0'
+		'1.3.0'
 	);
 
 	wp_enqueue_script(
 		'mdpl-product-landing',
 		get_template_directory_uri() . '/assets/js/product-landing.js',
 		array(),
-		'1.2.0',
+		'1.3.0',
 		true
 	);
 }
