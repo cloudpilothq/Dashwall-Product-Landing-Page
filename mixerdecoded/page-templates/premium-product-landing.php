@@ -19,9 +19,9 @@ while ( have_posts() ) :
 
 	$id = get_the_ID();
 
-	$eyebrow    = get_post_meta( $id, '_mdpl_eyebrow', true );
-	$headline   = get_post_meta( $id, '_mdpl_headline', true );
-	$subhead    = get_post_meta( $id, '_mdpl_subhead', true );
+	$eyebrow  = get_post_meta( $id, '_mdpl_eyebrow', true );
+	$headline = get_post_meta( $id, '_mdpl_headline', true );
+	$subhead  = get_post_meta( $id, '_mdpl_subhead', true );
 
 	$hero_image = absint( get_post_meta( $id, '_mdpl_hero_image', true ) );
 	$hero_image_url = $hero_image
@@ -37,31 +37,11 @@ while ( have_posts() ) :
 	$description_heading = get_post_meta( $id, '_mdpl_description_heading', true );
 	$product_description = get_post_meta( $id, '_mdpl_product_description', true );
 
-	$pros = get_post_meta( $id, '_mdpl_pros', true );
-	$cons = get_post_meta( $id, '_mdpl_cons', true );
-
-	$pros_list = array_filter(
-		array_map(
-			'trim',
-			preg_split( '/\r\n|\r|\n/', (string) $pros )
-		)
-	);
-
-	$cons_list = array_filter(
-		array_map(
-			'trim',
-			preg_split( '/\r\n|\r|\n/', (string) $cons )
-		)
-	);
-
 	$specifications = get_post_meta( $id, '_mdpl_specifications', true );
 	$specifications = is_array( $specifications ) ? $specifications : array();
 
 	$review_cta_text = get_post_meta( $id, '_mdpl_review_cta_text', true );
 	$review_cta_url  = get_post_meta( $id, '_mdpl_review_cta_url', true );
-
-	$review_quote  = get_post_meta( $id, '_mdpl_review_quote', true );
-	$review_source = get_post_meta( $id, '_mdpl_review_source', true );
 
 	$price_label  = get_post_meta( $id, '_mdpl_price_label', true );
 	$price_amount = get_post_meta( $id, '_mdpl_price_amount', true );
@@ -71,7 +51,7 @@ while ( have_posts() ) :
 	$purchase_cta_text = get_post_meta( $id, '_mdpl_purchase_cta_text', true );
 	$purchase_cta_url  = get_post_meta( $id, '_mdpl_purchase_cta_url', true );
 
-	$demo_video = get_post_meta( $id, '_mdpl_demo_video', true );
+	$demo_video   = get_post_meta( $id, '_mdpl_demo_video', true );
 	$video_heading = get_post_meta( $id, '_mdpl_video_heading', true );
 
 	$gallery_ids = get_post_meta( $id, '_mdpl_gallery', true );
@@ -80,7 +60,6 @@ while ( have_posts() ) :
 		: array();
 
 	$gallery_heading = get_post_meta( $id, '_mdpl_gallery_heading', true );
-
 	?>
 
 	<main id="mdpl-main" class="mdpl-shell">
@@ -106,7 +85,6 @@ while ( have_posts() ) :
 					<div class="mdpl-hero-actions">
 
 						<?php if ( $cta_text && $cta_url ) : ?>
-							<!-- Affiliate CTA -->
 							<a
 								class="mdpl-button mdpl-button-primary"
 								href="<?php echo esc_url( $cta_url ); ?>"
@@ -114,13 +92,12 @@ while ( have_posts() ) :
 								rel="sponsored nofollow noopener"
 							>
 								<?php echo esc_html( $cta_text ); ?>
-								<span aria-hidden="true">→</span>
+								<span aria-hidden="true">↗</span>
 							</a>
 						<?php endif; ?>
 
-						<!-- Internal page anchor -->
 						<a class="mdpl-text-link" href="#mdpl-description">
-							Explore product details
+							Product overview
 							<span aria-hidden="true">↓</span>
 						</a>
 
@@ -176,128 +153,154 @@ while ( have_posts() ) :
 
 			</section>
 
-			<!-- BENEFITS -->
+			<!-- PURCHASE INFORMATION -->
+			<section class="mdpl-purchase mdpl-section" id="mdpl-purchase" aria-labelledby="mdpl-purchase-title">
+
+				<div class="mdpl-purchase-copy">
+
+					<p class="mdpl-eyebrow">WHERE TO BUY</p>
+
+					<h2 id="mdpl-purchase-title">
+						<?php
+						echo esc_html(
+							$purchase_heading
+								? $purchase_heading
+								: 'Check the latest price and availability'
+						);
+						?>
+					</h2>
+
+					<p>
+						<?php
+						echo esc_html(
+							$price_note
+								? $price_note
+								: 'Visit the retailer to check current pricing, availability and product details.'
+						);
+						?>
+					</p>
+
+				</div>
+
+				<div class="mdpl-purchase-card">
+
+					<span class="mdpl-price-label">
+						<?php echo esc_html( $price_label ? $price_label : 'Retailer pricing' ); ?>
+					</span>
+
+					<?php if ( $price_amount ) : ?>
+						<strong class="mdpl-price-amount">
+							<?php echo esc_html( $price_amount ); ?>
+						</strong>
+					<?php endif; ?>
+
+					<?php if ( $purchase_cta_url && $purchase_cta_text ) : ?>
+
+						<a
+							class="mdpl-button mdpl-button-primary mdpl-button-wide"
+							href="<?php echo esc_url( $purchase_cta_url ); ?>"
+							target="_blank"
+							rel="sponsored nofollow noopener"
+						>
+							<?php echo esc_html( $purchase_cta_text ); ?>
+							<span aria-hidden="true">↗</span>
+						</a>
+
+					<?php else : ?>
+
+						<p class="mdpl-purchase-unavailable">
+							Add a retailer URL and button text in the landing-page settings to display the purchase link.
+						</p>
+
+					<?php endif; ?>
+
+					<small>
+						Prices and availability can change. Confirm details with the retailer.
+					</small>
+
+				</div>
+
+			</section>
+
+			<!-- KEY PRODUCT HIGHLIGHTS -->
 			<?php if ( array_filter( $benefits ) ) : ?>
 
-				<section class="mdpl-benefits" aria-label="Key product benefits">
+				<section class="mdpl-benefits mdpl-section" aria-labelledby="mdpl-highlights-title">
 
-					<?php foreach ( array_slice( $benefits, 0, 4 ) as $index => $benefit ) : ?>
+					<div class="mdpl-section-heading mdpl-highlights-heading">
+						<p class="mdpl-eyebrow">AT A GLANCE</p>
+						<h2 id="mdpl-highlights-title">Key Product Highlights</h2>
+					</div>
 
-						<?php if ( empty( $benefit['title'] ) ) : ?>
-							<?php continue; ?>
-						<?php endif; ?>
+					<div class="mdpl-benefits-grid">
 
-						<div class="mdpl-benefit">
+						<?php foreach ( array_slice( $benefits, 0, 4 ) as $index => $benefit ) : ?>
 
-							<span class="mdpl-benefit-number">
-								0<?php echo esc_html( $index + 1 ); ?>
-							</span>
+							<?php if ( empty( $benefit['title'] ) ) : ?>
+								<?php continue; ?>
+							<?php endif; ?>
 
-							<div>
-								<h2><?php echo esc_html( $benefit['title'] ); ?></h2>
+							<div class="mdpl-benefit">
 
-								<?php if ( ! empty( $benefit['text'] ) ) : ?>
-									<p><?php echo esc_html( $benefit['text'] ); ?></p>
-								<?php endif; ?>
+								<span class="mdpl-benefit-number">
+									0<?php echo esc_html( $index + 1 ); ?>
+								</span>
+
+								<div>
+									<h3><?php echo esc_html( $benefit['title'] ); ?></h3>
+
+									<?php if ( ! empty( $benefit['text'] ) ) : ?>
+										<p><?php echo esc_html( $benefit['text'] ); ?></p>
+									<?php endif; ?>
+								</div>
+
 							</div>
 
-						</div>
+						<?php endforeach; ?>
 
-					<?php endforeach; ?>
+					</div>
 
 				</section>
 
 			<?php endif; ?>
 
 			<!-- PRODUCT OVERVIEW -->
-			<section class="mdpl-description mdpl-section" id="mdpl-description">
+			<?php if ( $product_description ) : ?>
 
-				<div class="mdpl-section-heading">
-					<p class="mdpl-eyebrow">GET TO KNOW THE PRODUCT</p>
+				<section class="mdpl-description mdpl-section" id="mdpl-description" aria-labelledby="mdpl-description-title">
 
-					<h2>
-						<?php
-						echo esc_html(
-							$description_heading
-								? $description_heading
-								: 'Want to know more about this product?'
-						);
-						?>
-					</h2>
-				</div>
+					<div class="mdpl-section-heading">
+						<p class="mdpl-eyebrow">GET TO KNOW THE PRODUCT</p>
 
-				<?php if ( $product_description ) : ?>
+						<h2 id="mdpl-description-title">
+							<?php
+							echo esc_html(
+								$description_heading
+									? $description_heading
+									: 'About this product'
+							);
+							?>
+						</h2>
+					</div>
 
 					<div class="mdpl-prose entry themeform">
 						<?php
-						// Process rich-text content using WordPress content filters.
 						echo apply_filters( 'the_content', $product_description ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 					</div>
 
-				<?php endif; ?>
+				</section>
 
-				<?php if ( $pros_list || $cons_list ) : ?>
+			<?php endif; ?>
 
-					<div class="mdpl-pros-cons">
-
-						<?php if ( $pros_list ) : ?>
-
-							<div class="mdpl-pros-card">
-								<h3>Pros</h3>
-
-								<ul>
-									<?php foreach ( $pros_list as $pro ) : ?>
-										<li><?php echo esc_html( $pro ); ?></li>
-									<?php endforeach; ?>
-								</ul>
-							</div>
-
-						<?php endif; ?>
-
-						<?php if ( $cons_list ) : ?>
-
-							<div class="mdpl-cons-card">
-								<h3>Cons</h3>
-
-								<ul>
-									<?php foreach ( $cons_list as $con ) : ?>
-										<li><?php echo esc_html( $con ); ?></li>
-									<?php endforeach; ?>
-								</ul>
-							</div>
-
-						<?php endif; ?>
-
-					</div>
-
-				<?php endif; ?>
-
-				<?php if ( $review_cta_text && $review_cta_url ) : ?>
-
-					<div class="mdpl-review-action">
-						<!-- Internal MixerDecoded review link: normal follow link -->
-						<a
-							class="mdpl-button mdpl-button-primary"
-							href="<?php echo esc_url( $review_cta_url ); ?>"
-						>
-							<?php echo esc_html( $review_cta_text ); ?>
-							<span aria-hidden="true">→</span>
-						</a>
-					</div>
-
-				<?php endif; ?>
-
-			</section>
-
-			<!-- SPECIFICATIONS -->
+			<!-- ESSENTIAL SPECIFICATIONS -->
 			<?php if ( $specifications ) : ?>
 
 				<section id="mdpl-specifications" class="mdpl-specifications mdpl-section" aria-labelledby="mdpl-specifications-title">
 
 					<div class="mdpl-section-heading">
 						<p class="mdpl-eyebrow">PRODUCT DETAILS</p>
-						<h2 id="mdpl-specifications-title">Product specifications</h2>
+						<h2 id="mdpl-specifications-title">Essential Specifications</h2>
 					</div>
 
 					<div class="mdpl-spec-table-wrap">
@@ -332,7 +335,7 @@ while ( have_posts() ) :
 
 			<?php endif; ?>
 
-			<!-- VIDEO -->
+			<!-- OPTIONAL PRODUCT VIDEO -->
 			<?php
 			if ( $demo_video ) :
 				$video_embed = wp_oembed_get( esc_url( $demo_video ) );
@@ -340,11 +343,11 @@ while ( have_posts() ) :
 				if ( $video_embed ) :
 					?>
 
-					<section class="mdpl-video mdpl-section">
+					<section class="mdpl-video mdpl-section" aria-labelledby="mdpl-video-title">
 
 						<div class="mdpl-section-heading">
 							<p class="mdpl-eyebrow">SEE IT IN ACTION</p>
-							<h2>
+							<h2 id="mdpl-video-title">
 								<?php echo esc_html( $video_heading ? $video_heading : 'Watch the product in action' ); ?>
 							</h2>
 						</div>
@@ -363,12 +366,12 @@ while ( have_posts() ) :
 			<!-- PRODUCT GALLERY -->
 			<?php if ( $gallery_ids ) : ?>
 
-				<section id="mdpl-gallery" class="mdpl-gallery mdpl-section" aria-label="Product gallery">
+				<section id="mdpl-gallery" class="mdpl-gallery mdpl-section" aria-labelledby="mdpl-gallery-title">
 
 					<div class="mdpl-section-heading">
 						<p class="mdpl-eyebrow">A CLOSER LOOK</p>
-						<h2>
-							<?php echo esc_html( $gallery_heading ? $gallery_heading : 'See the details' ); ?>
+						<h2 id="mdpl-gallery-title">
+							<?php echo esc_html( $gallery_heading ? $gallery_heading : 'Explore the product' ); ?>
 						</h2>
 					</div>
 
@@ -399,121 +402,58 @@ while ( have_posts() ) :
 
 			<?php endif; ?>
 
-			<!-- SOCIAL PROOF -->
-			<?php if ( $review_quote ) : ?>
+			<!-- DETAILED MIXERDECODED REVIEW -->
+			<?php if ( $review_cta_text && $review_cta_url ) : ?>
 
-				<section class="mdpl-proof mdpl-section">
+				<section class="mdpl-review-section mdpl-section" aria-labelledby="mdpl-review-title">
 
-					<div class="mdpl-proof-mark">“</div>
+					<div class="mdpl-review-content">
 
-					<p class="mdpl-eyebrow">REVIEW & CUSTOMER PERSPECTIVE</p>
+						<p class="mdpl-eyebrow">WANT A CLOSER EVALUATION?</p>
 
-					<blockquote><?php echo esc_html( $review_quote ); ?></blockquote>
+						<h2 id="mdpl-review-title">
+							Read Our Detailed Review
+						</h2>
 
-					<?php if ( $review_source ) : ?>
-						<p class="mdpl-proof-source"><?php echo esc_html( $review_source ); ?></p>
-					<?php endif; ?>
+						<p>
+							Explore our in-depth review for a closer look at the product's performance,
+							features, practical use and important buying considerations.
+						</p>
 
-					<p class="mdpl-proof-disclaimer">
-						Use this space only for genuine, attributable customer feedback or clearly identified editorial testing.
-					</p>
+						<a
+							class="mdpl-button mdpl-button-secondary"
+							href="<?php echo esc_url( $review_cta_url ); ?>"
+						>
+							<?php echo esc_html( $review_cta_text ); ?>
+							<span aria-hidden="true">→</span>
+						</a>
+
+					</div>
 
 				</section>
 
 			<?php endif; ?>
 
-			<!-- PURCHASE -->
-			<section class="mdpl-purchase mdpl-section" id="mdpl-purchase">
+			<!-- FINAL PURCHASE CTA -->
+			<?php if ( $purchase_cta_url && $purchase_cta_text ) : ?>
 
-				<div class="mdpl-purchase-copy">
+				<section class="mdpl-final-cta mdpl-section" aria-labelledby="mdpl-final-cta-title">
 
-					<p class="mdpl-eyebrow">CHECK YOUR OPTIONS</p>
-
-					<h2>
-						<?php
-						echo esc_html(
-							$purchase_heading
-								? $purchase_heading
-								: 'Ready to take a closer look?'
-						);
-						?>
-					</h2>
-
-					<p>
-						<?php
-						echo esc_html(
-							$price_note
-								? $price_note
-								: 'Check the retailer for current pricing, availability and product details.'
-						);
-						?>
-					</p>
-
-				</div>
-
-				<div class="mdpl-purchase-card">
-
-					<span class="mdpl-price-label">
-						<?php echo esc_html( $price_label ? $price_label : 'Retailer pricing' ); ?>
-					</span>
-
-					<?php if ( $price_amount ) : ?>
-						<strong class="mdpl-price-amount">
-							<?php echo esc_html( $price_amount ); ?>
-						</strong>
-					<?php endif; ?>
-
-					<?php if ( $purchase_cta_url && $purchase_cta_text ) : ?>
-
-						<!-- Affiliate retailer CTA -->
-						<a
-							class="mdpl-button mdpl-button-primary mdpl-button-wide"
-							href="<?php echo esc_url( $purchase_cta_url ); ?>"
-							target="_blank"
-							rel="sponsored nofollow noopener"
-						>
-							<?php echo esc_html( $purchase_cta_text ); ?>
-							<span aria-hidden="true">↗</span>
-						</a>
-
-					<?php else : ?>
-
-						<p class="mdpl-purchase-unavailable">
-							Add a retailer URL and button text in the landing-page settings to display the purchase link.
-						</p>
-
-					<?php endif; ?>
-
-					<small>
-						Prices and availability can change. Confirm details with the retailer.
-					</small>
-
-				</div>
-
-			</section>
-
-			<!-- RELATED RESOURCES -->
-			<?php if ( get_post_meta( $id, '_mdpl_show_related', true ) ) : ?>
-
-				<section class="mdpl-related mdpl-section">
-
-					<div class="mdpl-section-heading">
-						<p class="mdpl-eyebrow">KEEP EXPLORING</p>
-						<h2>Related MixerDecoded resources</h2>
+					<div>
+						<p class="mdpl-eyebrow">READY TO EXPLORE YOUR OPTIONS?</p>
+						<h2 id="mdpl-final-cta-title">Check the latest retailer offer</h2>
+						<p>Confirm the current price, availability and product details with the retailer.</p>
 					</div>
 
-					<div class="mdpl-related-content">
-						<?php
-						/*
-						 * Related resource links should be normal internal links.
-						 * Do not add rel="nofollow" or rel="sponsored" to internal links.
-						 * WordPress permits standard anchor links through wp_kses_post().
-						 */
-						echo wp_kses_post(
-							get_post_meta( $id, '_mdpl_related_content', true )
-						);
-						?>
-					</div>
+					<a
+						class="mdpl-button mdpl-button-primary"
+						href="<?php echo esc_url( $purchase_cta_url ); ?>"
+						target="_blank"
+						rel="sponsored nofollow noopener"
+					>
+						<?php echo esc_html( $purchase_cta_text ); ?>
+						<span aria-hidden="true">↗</span>
+					</a>
 
 				</section>
 
