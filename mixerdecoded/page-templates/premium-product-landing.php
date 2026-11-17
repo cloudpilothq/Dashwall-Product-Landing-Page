@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-get_header();
+get_header( 'landing' );
 
 while ( have_posts() ) :
 	the_post();
