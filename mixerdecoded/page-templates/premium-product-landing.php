@@ -290,7 +290,7 @@ while ( have_posts() ) :
 			<!-- SPECIFICATIONS -->
 			<?php if ( $specifications ) : ?>
 
-				<section class="mdpl-specifications mdpl-section" aria-labelledby="mdpl-specifications-title">
+				<section id="mdpl-specifications" class="mdpl-specifications mdpl-section" aria-labelledby="mdpl-specifications-title">
 
 					<div class="mdpl-section-heading">
 						<p class="mdpl-eyebrow">PRODUCT DETAILS</p>
@@ -360,7 +360,7 @@ while ( have_posts() ) :
 			<!-- PRODUCT GALLERY -->
 			<?php if ( $gallery_ids ) : ?>
 
-				<section class="mdpl-gallery mdpl-section" aria-label="Product gallery">
+				<section id="mdpl-gallery" class="mdpl-gallery mdpl-section" aria-label="Product gallery">
 
 					<div class="mdpl-section-heading">
 						<p class="mdpl-eyebrow">A CLOSER LOOK</p>
@@ -515,4 +515,4 @@ while ( have_posts() ) :
 
 <?php endwhile; ?>
 
-<?php get_footer(); ?>
+<?php get_footer( 'landing' ); ?>
