@@ -106,6 +106,7 @@ while ( have_posts() ) :
 					<div class="mdpl-hero-actions">
 
 						<?php if ( $cta_text && $cta_url ) : ?>
+							<!-- Affiliate CTA -->
 							<a
 								class="mdpl-button mdpl-button-primary"
 								href="<?php echo esc_url( $cta_url ); ?>"
@@ -117,6 +118,7 @@ while ( have_posts() ) :
 							</a>
 						<?php endif; ?>
 
+						<!-- Internal page anchor -->
 						<a class="mdpl-text-link" href="#mdpl-description">
 							Explore product details
 							<span aria-hidden="true">↓</span>
@@ -274,6 +276,7 @@ while ( have_posts() ) :
 				<?php if ( $review_cta_text && $review_cta_url ) : ?>
 
 					<div class="mdpl-review-action">
+						<!-- Internal MixerDecoded review link: normal follow link -->
 						<a
 							class="mdpl-button mdpl-button-primary"
 							href="<?php echo esc_url( $review_cta_url ); ?>"
@@ -462,6 +465,7 @@ while ( have_posts() ) :
 
 					<?php if ( $purchase_cta_url && $purchase_cta_text ) : ?>
 
+						<!-- Affiliate retailer CTA -->
 						<a
 							class="mdpl-button mdpl-button-primary mdpl-button-wide"
 							href="<?php echo esc_url( $purchase_cta_url ); ?>"
@@ -500,6 +504,11 @@ while ( have_posts() ) :
 
 					<div class="mdpl-related-content">
 						<?php
+						/*
+						 * Related resource links should be normal internal links.
+						 * Do not add rel="nofollow" or rel="sponsored" to internal links.
+						 * WordPress permits standard anchor links through wp_kses_post().
+						 */
 						echo wp_kses_post(
 							get_post_meta( $id, '_mdpl_related_content', true )
 						);
