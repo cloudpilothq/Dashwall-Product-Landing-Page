@@ -228,7 +228,8 @@ while ( have_posts() ) :
 
 					<div class="mdpl-prose entry themeform">
 						<?php
-						echo wp_kses_post( wpautop( $product_description ) );
+						// Process rich-text content using WordPress content filters.
+						echo apply_filters( 'the_content', $product_description ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 					</div>
 
