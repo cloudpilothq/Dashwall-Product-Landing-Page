@@ -131,10 +131,11 @@ function mdpl_render_meta_box( $post ) {
 
 	<div class="mdpl-admin-wrap">
 
-		<p>
-			Configure the product landing page below. The main product overview, pros and cons,
-			specifications, gallery and calls to action are managed here.
-		</p>
+	<p>
+    Add only useful, buying-relevant specifications. Verify model numbers, capacity,
+    power, dimensions, included accessories and regional details against reliable
+    manufacturer documentation wherever possible. Leave uncertain details out.
+    </p>
 
 		<hr>
 		<h3>Hero section</h3>
@@ -305,15 +306,8 @@ function mdpl_render_meta_box( $post ) {
 		mdpl_field( 'Review page URL', 'mdpl_review_cta_url', $get( 'review_cta_url' ), 'url' );
 		?>
 
-		<hr>
-		<h3>Social proof</h3>
-
-		<?php
-		mdpl_field( 'Genuine review excerpt or testing observation', 'mdpl_review_quote', $get( 'review_quote' ), 'textarea' );
-		mdpl_field( 'Attribution / source', 'mdpl_review_source', $get( 'review_source' ) );
-		?>
-
-		<hr>
+		
+		
 		<h3>Pricing and purchase</h3>
 
 		<?php
@@ -324,20 +318,7 @@ function mdpl_render_meta_box( $post ) {
 		mdpl_field( 'Purchase CTA button text', 'mdpl_purchase_cta_text', $get( 'purchase_cta_text' ) ?: 'Check price on Amazon' );
 		mdpl_field( 'Purchase CTA retailer URL', 'mdpl_purchase_cta_url', $get( 'purchase_cta_url' ), 'url' );
 		?>
-
-		<hr>
-		<h3>Related resources</h3>
-
-		<p>
-			<label>
-				<input type="checkbox" name="mdpl_show_related" value="1" <?php checked( $get( 'show_related' ), '1' ); ?>>
-				Display related resources section
-			</label>
-		</p>
-
-		<?php
-		mdpl_field( 'Related resource content (HTML links allowed)', 'mdpl_related_content', $get( 'related_content' ), 'textarea' );
-		?>
+	
 
 	</div>
 	<?php
