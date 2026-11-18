@@ -1,112 +1,134 @@
-Dashwall – Customized WordPress Theme with Product Landing Pages
 
-A customized version of the Dashwall WordPress theme, extended with a dedicated product landing-page system developed for MixerDecoded.com.
+# Dashwall – Customized WordPress Theme with Product Landing Pages
 
-This project combines the underlying Dashwall theme with additional custom WordPress functionality designed to create focused, conversion-oriented product landing pages. These pages allow individual kitchen appliances and related products to be presented with product information, essential specifications, image galleries, retailer purchase links, and links to detailed editorial reviews.
+A customized version of the **Dashwall WordPress theme**, extended with a dedicated product landing-page system developed for [MixerDecoded.com](https://mixerdecoded.com/).
 
-Live Example
+The customization adds a purpose-built page template for presenting individual products through structured product information, key features, specifications, images, purchase links, and links to detailed editorial reviews.
 
-See the custom product landing-page system in use:
+## Live Example
 
-"View the HAUSWIRT M5 Max Product Landing Page" (https://mixerdecoded.com/hauswirt-m5-max-for-sale/)
+See the custom product landing-page design in action:
 
-The live example demonstrates how the custom template presents an individual product, organizes its buying information, and directs visitors toward relevant purchase options and supporting editorial content.
+**[View the HAUSWIRT M5 Max Product Landing Page](https://mixerdecoded.com/hauswirt-m5-max-for-sale/)**
 
-Project Overview
+This page demonstrates how the customized template presents product information and purchase options in a focused, standalone layout.
 
-The original Dashwall theme was adapted and extended with a custom product landing-page implementation.
+## Overview
 
-The additional functionality was developed specifically to support a product-focused publishing workflow. Rather than relying on a conventional blog post layout, the custom template provides a dedicated page structure for presenting individual products and guiding visitors toward relevant purchasing information.
+This repository contains a customized implementation of the Dashwall WordPress theme.
 
-The modifications are intended to work within the existing WordPress theme rather than operate as a separate website or standalone landing-page application.
+The original theme has been adapted with additional functionality for creating product-focused landing pages. The landing-page system is intended to complement traditional editorial content, such as product reviews, comparisons, and buying guides.
 
-Custom Product Landing-Page Features
+Rather than replacing the theme's standard website layout, the custom landing-page template uses its own dedicated header, footer, styling, and page structure.
 
-The customized theme includes a dedicated product landing-page template with the following capabilities:
+## Features
 
-- Custom hero section – Displays the product headline, introductory text, primary call to action, and featured product image.
-- Dedicated purchase section – Provides a prominent purchase area with retailer links and configurable buying information.
-- Key product highlights – Presents selected product features in a concise format.
-- Product overview – Displays an editorial product description.
-- Essential specifications – Organizes important product information in a structured specification table.
-- Product image gallery – Supports a dedicated gallery for additional product images.
-- Optional product video – Allows an embedded product demonstration where a suitable video is available.
-- Detailed review link – Connects the landing page to a full editorial review or supporting article.
-- Final purchase call to action – Provides another purchase opportunity at the bottom of the page.
-- Responsive layout – Adapts the landing-page presentation to desktop, tablet, and mobile screens.
-- Dedicated header and footer – Uses landing-page-specific header and footer templates without replacing the normal theme-wide header and footer.
+The custom product landing-page system includes:
 
-WordPress Integration
+- **Dedicated product hero section** – Introduces the product with its name, primary image, and supporting information.
+- **Product purchase section** – Presents purchase information and calls to action.
+- **Key product highlights** – Displays important product features in a concise format.
+- **Product overview** – Provides additional information about the product.
+- **Essential specifications** – Organizes relevant product specifications into a structured table.
+- **Product image gallery** – Displays additional product images.
+- **Optional product video** – Supports an embedded video where one is available.
+- **Detailed review link** – Connects visitors to the corresponding in-depth editorial review.
+- **Final call to action** – Provides another opportunity for visitors to visit the purchase destination.
+- **Dedicated landing-page header and footer** – Gives the landing page its own presentation without replacing the standard theme header and footer.
+- **Responsive layout** – Adapts the landing-page presentation to different screen sizes.
 
-The product landing-page functionality is integrated into the WordPress theme through a dedicated page template and supporting PHP, CSS, and JavaScript files.
+The information displayed on each landing page is configured through the WordPress administration interface.
 
-The implementation includes:
+## WordPress Integration
 
-- A custom page template.
-- A dedicated product landing-page administration interface.
-- WordPress post metadata for configurable product content.
-- Separate landing-page header and footer templates.
-- Dedicated styles and JavaScript for the landing-page experience.
+The custom functionality is integrated into the WordPress theme and includes:
 
-Product content can be managed through the WordPress editing interface rather than requiring manual changes to the template for every product.
+- A dedicated product landing-page template.
+- Custom administration fields for entering product information.
+- WordPress post metadata for storing landing-page content.
+- A separate header and footer for the landing-page template.
+- Dedicated CSS and JavaScript assets.
 
-Intended Use
+The template is designed to work within the customized Dashwall theme rather than as a standalone WordPress plugin.
 
-The custom landing-page system was developed primarily for product-focused publishing websites, particularly websites that publish product reviews, buying guides, and commercial product information.
+## Project Structure
 
-It is especially suitable for presenting individual products where visitors need a concise overview, key specifications, relevant images, and a clear route to purchase information.
+The custom landing-page functionality is organized across the following theme files and directories:
 
-The implementation currently supports the product-publishing workflow used by MixerDecoded.com.
+```text
+mixerdecoded/
+├── page-templates/
+│   └── premium-product-landing.php
+├── inc/
+│   └── mixerdecoded-product-landing.php
+├── assets/
+│   ├── css/
+│   │   └── product-landing.css
+│   └── js/
+│       └── product-landing.js
+├── header-landing.php
+└── footer-landing.php
+```
 
-Installation
+The remaining files and directories belong to the underlying Dashwall theme and its other customizations.
+
+## Installation
 
 1. Download or clone this repository.
-2. Upload the theme directory to your WordPress installation under "wp-content/themes/".
-3. Activate the theme from Appearance → Themes.
-4. Create or edit a WordPress page.
-5. Select the custom product landing-page template from the page template selector.
-6. Configure the available product information using the custom landing-page fields.
-7. Publish the page and review its appearance on desktop and mobile devices.
+2. Locate the `mixerdecoded` theme directory.
+3. Upload the theme directory to your WordPress installation's `wp-content/themes/` directory.
+4. Activate the theme from **WordPress Admin → Appearance → Themes**.
+5. Create a new WordPress page or edit an existing one.
+6. Select the custom product landing-page template in the page template settings.
+7. Enter the relevant product information using the available administration fields.
+8. Publish or update the page.
+9. Review the result on desktop and mobile devices.
 
-Important: This is a customized WordPress theme, not a standalone HTML landing-page generator. It requires a working WordPress installation.
+**Important:** This is a customized theme implementation. Before installing it on an existing website, back up your files and database. Test the theme in a staging environment first, particularly if your WordPress installation already uses a modified version of Dashwall.
 
-Project Structure
+## Customization
 
-The repository contains the customized WordPress theme and its supporting files.
+The landing-page content is managed through the WordPress administration interface.
 
-The custom product landing-page implementation is organized around:
+Depending on the available fields, page editors can configure information such as:
 
-- "page-templates/" – Custom product landing-page template.
-- "inc/" – Theme functionality and product landing-page administration.
-- "assets/css/" – Stylesheets, including dedicated landing-page styles.
-- "assets/js/" – JavaScript supporting landing-page interactions.
-- "header-landing.php" – Dedicated landing-page header.
-- "footer-landing.php" – Dedicated landing-page footer.
+- Product name and introductory content.
+- Product images.
+- Key product highlights.
+- Product overview.
+- Essential specifications.
+- Purchase information and destination links.
+- Optional video content.
+- Links to detailed product reviews.
 
-Customization
+The visual presentation and functionality can be further customized by editing the dedicated template, CSS, and JavaScript files.
 
-The product landing-page implementation can be adapted to suit different products and publishing requirements.
+## Intended Use
 
-Product content, specifications, images, purchase information, and review links are configured through the WordPress administration interface.
+The custom landing-page system is designed for product-focused publishing websites, particularly websites that publish:
 
-The template and supporting assets can also be modified to adjust the layout, styling, navigation, and presentation.
+- Product reviews.
+- Buying guides.
+- Product comparisons.
+- Product recommendations.
+- Individual product information pages.
 
-Original Theme Attribution
+It provides a separate presentation format for individual products while allowing the main website to retain its regular editorial structure.
 
-This project is based on the original Dashwall WordPress theme and includes additional custom development and modifications.
+## Original Theme and Attribution
 
-The original theme author's work remains subject to the applicable original license and attribution requirements. Please refer to the repository's "LICENSE" file and original theme documentation for licensing information.
+This project is based on the **Dashwall WordPress theme**.
 
-Custom product landing-page functionality and related modifications were developed for this project.
+The product landing-page functionality and related customizations were developed for MixerDecoded.com and should be distinguished from the original Dashwall theme.
 
-Project
+The original theme's authorship, copyright notices, and licensing terms remain subject to the original theme's license. Review the repository's license file and original theme documentation before redistributing or reusing the underlying theme.
 
-Website: "MixerDecoded.com" (https://mixerdecoded.com/)
+## Project Links
 
-Live Product Landing Page Example: "HAUSWIRT M5 Max" (https://mixerdecoded.com/hauswirt-m5-max-for-sale/)
-
-Repository: "Dashwall – Product Landing Page" (https://github.com/cloudpilothq/Dashwall-Product-Landing-Page)
+- **Website:** [MixerDecoded.com](https://mixerdecoded.com/)
+- **Live Product Landing Page:** [HAUSWIRT M5 Max](https://mixerdecoded.com/hauswirt-m5-max-for-sale/)
+- **GitHub Repository:** [Dashwall – Customized WordPress Theme](https://github.com/cloudpilothq/Dashwall-Product-Landing-Page)
 
 ---
 
-This repository contains a customized WordPress theme with additional product landing-page functionality developed for product-focused publishing.
+**Developed and customized for MixerDecoded.com.**
