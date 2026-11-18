@@ -1613,3 +1613,445 @@
 	}
 }
 
+
+/* =========================================================
+   MIXERDECODED LANDING PAGE — FINAL LAYOUT CORRECTIONS
+   Header, mobile navigation, buttons, footer and specifications
+   ========================================================= */
+
+/* Prevent horizontal overflow */
+.mdpl-landing-site,
+.mdpl-landing-site body,
+.mdpl-shell,
+.mdpl-product-page {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.mdpl-landing-site {
+    overflow-x: hidden;
+}
+
+.mdpl-product-page,
+.mdpl-product-page * {
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------
+   HEADER BRANDING
+   --------------------------------------------------------- */
+
+.mdpl-header-inner {
+    width: min(100% - 64px, 1400px);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 28px;
+}
+
+.mdpl-brand {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none !important;
+}
+
+.mdpl-brand-name {
+    display: inline-block;
+    color: #fff !important;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* The header now uses text branding, not the uploaded image logo. */
+.mdpl-brand img.custom-logo,
+.mdpl-brand .custom-logo-link {
+    display: none !important;
+}
+
+/* ---------------------------------------------------------
+   DESKTOP NAVIGATION
+   --------------------------------------------------------- */
+
+.mdpl-primary-nav {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(16px, 2.2vw, 32px);
+    min-width: 0;
+}
+
+.mdpl-primary-nav > a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.mdpl-primary-nav .mdpl-header-cta {
+    margin-left: 5px;
+    padding: 0 22px;
+}
+
+/* ---------------------------------------------------------
+   CENTRED SPECIFICATIONS TABLE
+   --------------------------------------------------------- */
+
+.mdpl-product-page .mdpl-specifications {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mdpl-product-page .mdpl-specifications .mdpl-section-heading {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto 32px;
+    text-align: center;
+}
+
+.mdpl-product-page .mdpl-specifications .mdpl-spec-table-wrap {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: 18px;
+}
+
+.mdpl-product-page .mdpl-specifications .mdpl-spec-table {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.mdpl-product-page .mdpl-specifications .mdpl-spec-table th,
+.mdpl-product-page .mdpl-specifications .mdpl-spec-table td {
+    text-align: left;
+}
+
+/* ---------------------------------------------------------
+   BUTTONS — PREVENT OVERLAPPING AND OVERFLOW
+   --------------------------------------------------------- */
+
+.mdpl-product-page .mdpl-button,
+.mdpl-product-page .mdpl-text-link {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.mdpl-product-page .mdpl-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: center;
+}
+
+.mdpl-product-page .mdpl-button span {
+    flex: 0 0 auto;
+}
+
+.mdpl-hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    min-width: 0;
+}
+
+.mdpl-purchase-card,
+.mdpl-purchase-copy,
+.mdpl-final-cta > div {
+    min-width: 0;
+}
+
+.mdpl-purchase-card .mdpl-button {
+    width: 100%;
+}
+
+.mdpl-final-cta .mdpl-button {
+    flex: 0 1 auto;
+}
+
+/* ---------------------------------------------------------
+   FOOTER — DESKTOP ALIGNMENT
+   --------------------------------------------------------- */
+
+.mdpl-footer-inner {
+    width: min(100% - 64px, 1400px);
+    max-width: 1400px;
+    min-height: 90px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    justify-content: initial;
+    gap: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px 0;
+}
+
+.mdpl-footer-brand {
+    justify-self: start;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.mdpl-footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px 0;
+    min-width: 0;
+}
+
+.mdpl-footer-nav a {
+    padding: 5px 13px;
+    white-space: nowrap;
+}
+
+.mdpl-footer-copyright {
+    justify-self: end;
+    text-align: right;
+    white-space: normal;
+    max-width: 230px;
+}
+
+/* ---------------------------------------------------------
+   TABLET AND MOBILE NAVIGATION
+   Switch to hamburger before desktop links become crowded.
+   --------------------------------------------------------- */
+
+@media (max-width: 920px) {
+
+    .mdpl-header-inner {
+        width: calc(100% - 40px);
+        min-height: 68px;
+        gap: 15px;
+    }
+
+    .mdpl-brand-name {
+        font-size: 23px;
+    }
+
+    .mdpl-menu-toggle {
+        display: flex;
+        flex: 0 0 44px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        margin-left: auto;
+    }
+
+    .mdpl-primary-nav {
+        position: absolute;
+        top: 100%;
+        right: -20px;
+        left: -20px;
+        z-index: 1000;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        width: auto;
+        padding: 10px 20px 20px;
+        background: linear-gradient(110deg, #00c196 0%, #1b6da0 100%);
+        box-shadow: 0 12px 18px rgba(15, 55, 75, .16);
+    }
+
+    .mdpl-site-header.is-menu-open .mdpl-primary-nav {
+        display: flex;
+    }
+
+    .mdpl-primary-nav > a {
+        display: block;
+        width: 100%;
+        padding: 14px 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+        font-size: 15px;
+        white-space: normal;
+    }
+
+    .mdpl-primary-nav .mdpl-header-cta {
+        display: flex;
+        width: 100%;
+        min-height: 46px;
+        margin: 13px 0 0;
+        padding: 12px 18px;
+        border: 0;
+        white-space: normal;
+    }
+
+    .mdpl-footer-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 13px;
+        width: calc(100% - 40px);
+        min-height: 0;
+        padding: 22px 0;
+    }
+
+    .mdpl-footer-brand,
+    .mdpl-footer-nav,
+    .mdpl-footer-copyright {
+        justify-self: center;
+        text-align: center;
+    }
+
+    .mdpl-footer-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 5px 0;
+    }
+
+    .mdpl-footer-copyright {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* ---------------------------------------------------------
+   MOBILE CONTENT AND BUTTONS
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+    .mdpl-product-page {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .mdpl-hero-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .mdpl-hero-actions > * {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .mdpl-hero-actions .mdpl-button,
+    .mdpl-hero-actions .mdpl-text-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    .mdpl-purchase-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .mdpl-purchase-card .mdpl-button,
+    .mdpl-review-content .mdpl-button,
+    .mdpl-final-cta .mdpl-button {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        min-height: 48px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 12px 16px;
+    }
+
+    .mdpl-final-cta {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .mdpl-final-cta > div {
+        width: 100%;
+    }
+
+    .mdpl-footer-nav {
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    .mdpl-footer-nav a {
+        padding: 5px 10px;
+        white-space: normal;
+        border-right: 0;
+        text-align: center;
+    }
+
+    .mdpl-product-page .mdpl-specifications .mdpl-spec-table-wrap {
+        max-width: 100%;
+    }
+}
+
+/* ---------------------------------------------------------
+   SMALL MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .mdpl-header-inner {
+        width: calc(100% - 28px);
+    }
+
+    .mdpl-brand-name {
+        font-size: 21px;
+    }
+
+    .mdpl-menu-toggle {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .mdpl-primary-nav {
+        right: -14px;
+        left: -14px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .mdpl-product-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .mdpl-product-page .mdpl-specifications .mdpl-spec-table th,
+    .mdpl-product-page .mdpl-specifications .mdpl-spec-table td {
+        padding: 11px 10px;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    .mdpl-footer-inner {
+        width: calc(100% - 28px);
+    }
+
+    .mdpl-footer-nav a {
+        padding-left: 8px;
+        padding-right: 8px;
+        font-size: 12px;
+    }
+}
