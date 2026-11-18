@@ -40,13 +40,18 @@ if ( $privacy_url ) {
 		'url'   => $privacy_url,
 	);
 }
+
+$site_name = get_bloginfo( 'name' );
 ?>
 
 <footer class="mdpl-site-footer">
 	<div class="mdpl-footer-inner">
 
-		<a class="mdpl-footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<span><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
+		<a
+			class="mdpl-footer-brand"
+			href="<?php echo esc_url( home_url( '/' ) ); ?>"
+		>
+			<?php echo esc_html( $site_name ); ?>
 		</a>
 
 		<nav class="mdpl-footer-nav" aria-label="Footer navigation">
@@ -59,7 +64,7 @@ if ( $privacy_url ) {
 
 		<p class="mdpl-footer-copyright">
 			&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?>
-			<?php echo esc_html( get_bloginfo( 'name' ) ); ?>.
+			<?php echo esc_html( $site_name ); ?>.
 			All rights reserved.
 		</p>
 
