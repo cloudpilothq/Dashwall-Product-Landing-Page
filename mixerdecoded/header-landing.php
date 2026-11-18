@@ -1,5 +1,4 @@
 
-
 <?php
 /**
  * Dedicated header for MixerDecoded product landing pages.
@@ -13,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $page_id    = get_queried_object_id();
 $review_url = get_post_meta( $page_id, '_mdpl_review_cta_url', true );
+$site_name  = get_bloginfo( 'name' );
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -30,12 +30,14 @@ $review_url = get_post_meta( $page_id, '_mdpl_review_cta_url', true );
 <header class="mdpl-site-header">
 	<div class="mdpl-header-inner">
 
-		<a class="mdpl-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> homepage">
-			<?php if ( has_custom_logo() ) : ?>
-				<?php the_custom_logo(); ?>
-			<?php else : ?>
-				<span class="mdpl-brand-name"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
-			<?php endif; ?>
+		<a
+			class="mdpl-brand"
+			href="<?php echo esc_url( home_url( '/' ) ); ?>"
+			aria-label="<?php echo esc_attr( $site_name ); ?> homepage"
+		>
+			<span class="mdpl-brand-name">
+				<?php echo esc_html( $site_name ); ?>
+			</span>
 		</a>
 
 		<button
@@ -61,8 +63,6 @@ $review_url = get_post_meta( $page_id, '_mdpl_review_cta_url', true );
 
 			<?php if ( $review_url ) : ?>
 				<a href="<?php echo esc_url( $review_url ); ?>">Our Review</a>
-			<?php else : ?>
-				<a href="#mdpl-description">Our Review</a>
 			<?php endif; ?>
 
 			<a class="mdpl-header-cta" href="#mdpl-purchase">
