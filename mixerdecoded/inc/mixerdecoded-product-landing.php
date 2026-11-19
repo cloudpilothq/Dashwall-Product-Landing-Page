@@ -22,6 +22,7 @@ add_filter( 'theme_page_templates', 'mdpl_register_page_template' );
 /**
  * Load admin media tools only on the Page editor.
  */
+
 function mdpl_admin_assets( $hook ) {
 	if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
 		return;
@@ -40,6 +41,14 @@ function mdpl_admin_assets( $hook ) {
 		get_template_directory_uri() . '/assets/js/mdpl-admin.js',
 		array( 'jquery', 'media-editor', 'media-views' ),
 		'1.4.0',
+		true
+	);
+
+	wp_enqueue_script(
+		'mdpl-rank-math-content-analysis',
+		get_template_directory_uri() . '/assets/js/rank-math-product-landing.js',
+		array( 'wp-hooks', 'rank-math-analyzer' ),
+		'1.0.0',
 		true
 	);
 }
