@@ -43,14 +43,6 @@ function mdpl_admin_assets( $hook ) {
 		'1.4.0',
 		true
 	);
-
-	wp_enqueue_script(
-		'mdpl-rank-math-content-analysis',
-		get_template_directory_uri() . '/assets/js/rank-math-product-landing.js',
-		array( 'wp-hooks', 'rank-math-analyzer' ),
-		'1.0.0',
-		true
-	);
 }
 add_action( 'admin_enqueue_scripts', 'mdpl_admin_assets' );
 
