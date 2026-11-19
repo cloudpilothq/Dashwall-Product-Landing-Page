@@ -1,9 +1,5 @@
 
-/**
- * MixerDecoded product landing pages
- * Rank Math content analysis integration.
- */
-(function (window, document) {
+(function ($, window, document) {
     'use strict';
 
     if (
@@ -14,100 +10,154 @@
         return;
     }
 
-    var refreshTimer = null;
+    var refreshTimer;
 
-    function htmlToText(html) {
+    function escapeHTML(value) {
         var element = document.createElement('div');
-        element.innerHTML = html || '';
-
-        return (element.textContent || element.innerText || '')
-            .replace(/\s+/g, ' ')
-            .trim();
+        element.textContent = value || '';
+        return element.innerHTML;
     }
 
     function getValue(selector) {
         var field = document.querySelector(selector);
-        return field ? htmlToText(field.value || '') : '';
+
+        return field ? field.value.trim() : '';
     }
 
-    function getValues(selector) {
-        return Array.prototype.map.call(
-            document.querySelectorAll(selector),
-            function (field) {
-                return htmlToText(field.value || '');
-            }
-        ).filter(Boolean);
+    function makeElement(tag, value) {
+        if (!value) {
+            return '';
+        }
+
+        return '<' + tag + '>' + escapeHTML(value) +
+            '</' + tag + '>';
     }
 
-    function getProductDescription() {
+    function getDescription() {
         if (window.tinymce) {
             var editor = window.tinymce.get(
                 'mdpl_product_description'
             );
 
             if (editor && !editor.isHidden()) {
-                return htmlToText(editor.getContent());
+                return editor.getContent();
             }
         }
 
-        return getValue('#mdpl_product_description');
-    }
-
-    function getLandingPageContent() {
-        var parts = [];
-
-        // Hero content.
-        parts.push(getValue('#mdpl_eyebrow'));
-        parts.push(getValue('#mdpl_headline'));
-        parts.push(getValue('#mdpl_subhead'));
-
-        // Product benefits.
-        parts = parts.concat(
-            getValues('input[name^="mdpl_benefits"][name$="[title]"]'),
-            getValues('textarea[name^="mdpl_benefits"][name$="[text]"]')
+        var textarea = document.getElementById(
+            'mdpl_product_description'
         );
 
-        // Product overview.
-        parts.push(getValue('#mdpl_description_heading'));
-        parts.push(getProductDescription());
-
-        // Pros and cons.
-        parts.push(getValue('#mdpl_pros'));
-        parts.push(getValue('#mdpl_cons'));
-
-        // Product specifications.
-        parts = parts.concat(
-            getValues('#mdpl-specifications input[name$="[label]"]'),
-            getValues('#mdpl-specifications input[name$="[value]"]')
-        );
-
-        return parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+        return textarea ? textarea.value : '';
     }
 
-    function addLandingPageContent(content) {
-        var customContent = getLandingPageContent();
-        var existingContent = typeof content === 'string'
-            ? content
-            : '';
+    function getBenefits() {
+        var output = '';
 
-        if (!customContent) {
-            return existingContent;
+        document.querySelectorAll(
+            '.mdpl-benefit-admin'
+        ).forEach(function (item) {
+            var title = item.querySelector(
+                'input[name$="[title]"]'
+            );
+
+            var description = item.querySelector(
+                'textarea[name$="[text]"]'
+            );
+
+            output += makeElement(
+                'h3',
+                title ? title.value.trim() : ''
+            );
+
+            output += makeElement(
+                'p',
+                description ? description.value.trim() : ''
+            );
+        });
+
+        return output;
+    }
+
+    function getSpecifications() {
+        var output = '';
+
+        document.querySelectorAll(
+            '#mdpl-specifications .mdpl-spec-row'
+        ).forEach(function (row) {
+            var label = row.querySelector(
+                'input[name$="[label]"]'
+            );
+
+            var value = row.querySelector(
+                'input[name$="[value]"]'
+            );
+
+            var labelText = label ? label.value.trim() : '';
+            var valueText = value ? value.value.trim() : '';
+
+            if (labelText || valueText) {
+                output += '<p>' +
+                    escapeHTML(labelText) + ': ' +
+                    escapeHTML(valueText) +
+                    '</p>';
+            }
+        });
+
+        return output;
+    }
+
+    function getList(selector) {
+        var value = getValue(selector);
+
+        if (!value) {
+            return '';
         }
 
-        return existingContent + ' ' + customContent;
+        var items = value.split(/\r?\n/).filter(Boolean);
+
+        return '<ul>' + items.map(function (item) {
+            return '<li>' + escapeHTML(item) + '</li>';
+        }).join('') + '</ul>';
+    }
+
+    function getLandingPageContent(content) {
+        var output = content || '';
+
+        output += makeElement('p', getValue('#mdpl_eyebrow'));
+        output += makeElement('h1', getValue('#mdpl_headline'));
+        output += makeElement('p', getValue('#mdpl_subhead'));
+
+        output += getBenefits();
+
+        output += makeElement(
+            'h2',
+            getValue('#mdpl_description_heading')
+        );
+
+        // Preserve the actual product-description HTML.
+        output += getDescription();
+
+        output += makeElement('h2', 'Pros');
+        output += getList('#mdpl_pros');
+
+        output += makeElement('h2', 'Cons');
+        output += getList('#mdpl_cons');
+
+        output += getSpecifications();
+
+        return output;
     }
 
     window.wp.hooks.addFilter(
         'rank_math_content',
         'mixerdecoded/product-landing-content',
-        addLandingPageContent,
-        20
+        getLandingPageContent,
+        11
     );
 
     function refreshAnalysis() {
-        if (refreshTimer) {
-            window.clearTimeout(refreshTimer);
-        }
+        window.clearTimeout(refreshTimer);
 
         refreshTimer = window.setTimeout(function () {
             if (
@@ -116,63 +166,33 @@
             ) {
                 window.rankMathEditor.refresh('content');
             }
-        }, 350);
+        }, 500);
     }
 
-    // Watch custom fields.
-    document.addEventListener('input', function (event) {
-        if (
-            event.target &&
-            event.target.closest('.mdpl-admin-wrap')
-        ) {
-            refreshAnalysis();
-        }
-    });
+    // Monitor ordinary custom fields.
+    $(document).on(
+        'input change',
+        '.mdpl-admin-wrap input, .mdpl-admin-wrap textarea',
+        refreshAnalysis
+    );
 
-    document.addEventListener('change', function (event) {
-        if (
-            event.target &&
-            event.target.closest('.mdpl-admin-wrap')
-        ) {
-            refreshAnalysis();
-        }
-    });
-
-    // Watch the rich-text editor.
-    if (window.tinymce) {
-        window.tinymce.on('AddEditor', function (event) {
+    // Monitor the WordPress rich-text editor.
+    $(document).on(
+        'tinymce-editor-init',
+        function (event, editor) {
             if (
-                event.editor &&
-                event.editor.id === 'mdpl_product_description'
+                editor &&
+                editor.id === 'mdpl_product_description'
             ) {
-                event.editor.on(
+                editor.on(
                     'keyup change input undo redo SetContent',
                     refreshAnalysis
                 );
             }
-        });
-
-        var editor = window.tinymce.get(
-            'mdpl_product_description'
-        );
-
-        if (editor) {
-            editor.on(
-                'keyup change input undo redo SetContent',
-                refreshAnalysis
-            );
         }
-    }
+    );
 
     // Initial analysis.
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            refreshAnalysis,
-            { once: true }
-        );
-    } else {
-        refreshAnalysis();
-    }
+    refreshAnalysis();
 
-})(window, document);
+})(jQuery, window, document);
